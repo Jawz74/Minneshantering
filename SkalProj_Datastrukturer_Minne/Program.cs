@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Data;
 using System.Diagnostics;
 using System.Net.Http.Headers;
 using System.Text;
@@ -330,7 +331,7 @@ namespace SkalProj_Datastrukturer_Minne
             bool isWellFormed = false;
             Stack<char> stack = new Stack<char>();
 
-            Console.WriteLine("Ange valfri sträng, som ska kollas om den är välformad:");           
+            Console.WriteLine("Ange valfri sträng, som ska kollas om den är välformad:");
 
             string input = Console.ReadLine() ?? string.Empty;
 
@@ -481,78 +482,75 @@ namespace SkalProj_Datastrukturer_Minne
 
         private static void Recursion()
         {
-            Console.WriteLine("------------------------------------------");
-            Console.WriteLine("1. Beräkna det n:te jämna talet rekursivt.");
-            Console.WriteLine("2. Beräkna det n:te Fibonacci-talet rekursivt.");
-            Console.WriteLine("Enter - Återgå till huvudmeny.");
-            Console.WriteLine("Ange ett val:");
-
-            string val = Console.ReadLine();
             int tal;
+            string val;
+            Console.Clear();
 
-            if ((val == "1") || (val == "2"))
+            do
             {
-                Console.WriteLine("Ange ett tal:");
-                tal = int.Parse(Console.ReadLine());
+                Console.WriteLine("-----------------------------------------------");
+                Console.WriteLine("1. Beräkna det n:te jämna talet rekursivt.");
+                Console.WriteLine("2. Beräkna det n:te Fibonacci-talet rekursivt.");
+                Console.WriteLine("Enter - Återgå till huvudmenyn.");
+                Console.WriteLine("-----------------------------------------------");
+                Console.Write("Ange ett val: ");
+                val = Console.ReadLine() ?? string.Empty;
 
                 if (val == "1")
                 {
+                    Console.WriteLine("Ange vilket jämt tal i ordningen du vill beräkna:");                    
+                    tal = int.Parse(Console.ReadLine()!);
                     Console.WriteLine($"Rekursiv beräkning av jämt tal nr {tal} ger: " + RecursiveEven(tal));
                 }
-
                 else if (val == "2")
                 {
+                    Console.WriteLine("Ange vilket tal i Fibonacci-serien (0,1,1,2,3,5,8..osv) du vill beräkna:");
+                    tal = int.Parse(Console.ReadLine()!);
                     Console.WriteLine($"Rekursiv beräkning av Fibonacci tal nr {tal} ger: " + Fibonacci(tal));
                 }
-            }
 
+                Console.WriteLine();
 
-            //do
-            //{
-            //    Console.WriteLine("Ange ett tal:");
-            //    tal = int.Parse(Console.ReadLine());
+            } while ((val == "1") || (val == "2"));
 
-            //    Console.WriteLine(InterativeFibonacci(tal));
-            //} while (tal != -1);
-
-            Console.WriteLine();
+            Console.Clear();
         }
 
         private static void Iteration()
         {
-            Console.WriteLine("------------------------------------------");
-            Console.WriteLine("1. Beräkna det n:te jämna talet interativt.");
-            Console.WriteLine("2. Beräkna det n:te Fibonacci-talet interativt.");
-            Console.WriteLine("Enter - Återgå till huvudmeny.");
-            Console.WriteLine("Ange ett val:");
-
-            string val = Console.ReadLine();
             int tal;
+            string val;
+            Console.Clear();
 
-            if ((val == "1") || (val == "2"))
+            do
             {
-                Console.WriteLine("Ange ett tal:");
-                tal = int.Parse(Console.ReadLine());
+                Console.WriteLine("-----------------------------------------------");
+                Console.WriteLine("1. Beräkna det n:te jämna talet interativt.");
+                Console.WriteLine("2. Beräkna det n:te Fibonacci-talet interativt.");
+                Console.WriteLine("Enter - Återgå till huvudmenyn.");
+                Console.WriteLine("-----------------------------------------------");
+                Console.Write("Ange ett val: ");
+                val = Console.ReadLine() ?? string.Empty;
 
                 if (val == "1")
                 {
+                    Console.WriteLine("Ange vilket jämt tal i ordningen du vill beräkna:");
+                    tal = int.Parse(Console.ReadLine()!);
                     Console.WriteLine($"Iterativ beräkning av jämt tal nr {tal} ger: " + IterativeEven(tal));
                 }
-
                 else if (val == "2")
                 {
-                    Console.WriteLine($"Iterativ beräkning av Fibonacci-tal nr {tal} ger: " + IterativeFibonacci(tal));
+                    Console.WriteLine("Ange vilket tal i Fibonacci-serien (0,1,1,2,3,5,8..osv) du vill beräkna:");
+                    tal = int.Parse(Console.ReadLine()!);
+                    Console.WriteLine($"Iterativ beräkning av Fibonacci tal nr {tal} ger: " + IterativeFibonacci(tal));
                 }
-            }
 
+                Console.WriteLine();
 
-            //do
-            //{
-            //    Console.WriteLine("Ange ett tal:");
-            //    tal = int.Parse(Console.ReadLine());
+            } while ((val == "1") || (val == "2"));
 
-            //    Console.WriteLine(InterativeFibonacci(tal));
-            //} while (tal != -1);
+            Console.Clear();
+
         }
 
         static int RecursiveEven(int n)
