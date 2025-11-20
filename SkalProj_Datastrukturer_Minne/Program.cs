@@ -13,6 +13,102 @@ namespace SkalProj_Datastrukturer_Minne
         /// The main method, vill handle the menues for the program
         /// </summary>
         /// <param name="args"></param>
+        /// 
+
+        /*
+        Frågor:
+
+        1. Hur fungerar stacken och heapen?
+        -------------------------------------
+        Svar: I .NET används två minnesområden: stacken och heapen.        
+        
+        Stacken lagrar:
+        Lokala variabler som är värdetyper (int, double, bool, struct)
+        Referenser (pekare) till objekt på heapen
+        Metodparametrar och returadresser
+
+        Stacken är organiserad enligt LIFO (Last In, First Out). 
+        När en metod anropas skapas en ny stack frame som innehåller alla lokala variabler. När metoden avslutas tas hela stack frame:n bort automatiskt.
+
+        Exempel:
+
+        void MyMethod()
+        {
+            int x = 5;                   // x lagras direkt på stacken
+            MyClass mc = new MyClass();  // Variabeln mc är en referens (pekare) och ligger på stacken (precis som x). Själva objektinstansen (skapad med new) ligger dock på heapen
+        }
+
+        Heapen lagrar:
+        Alla referenstyper, tex objekt av klasser, arrayer och listor.
+
+        Observera att variablerna som pekar på dessa objekt (referenserna) lagras på stacken, men själva data ligger på heapen.
+        Minnet kan, men behöver inte frigöras manuellt, det sköts automatiskt av .NET's Garbage Collector, som tar bort "döda" objekt (dvs som inte längre refereras).
+
+
+        2. Vad är Value Types respektive Reference Types och vad skiljer dem åt?
+        ------------------------------------------------------------------------
+           
+        Svar:
+        Value Types (värdetyper) - Lagrar sitt värde direkt, kopieras vid tilldelning, ligger normalt på stacken.
+        Exempel på värdetyper är int, bool, double, struct, enum.
+
+        int x = 5;
+        int y = x;  // y får en kopia av x's värde
+        y = 10;     // tilldelningen av y till något annat påverkar inte x
+
+        Reference Types (referenstyper) - Variabel som innehåller en referens till en objektinstans (på heapen). Kopiering kopierar referensen, inte objektet.
+        Exempel på referenstyper är klasser, arrayer, listor, interfaces.
+
+        MyClass mc1 = new MyClass();
+        MyClass mc2 = mc1;           // Både mc1 och mc2 pekar nu på samma objektinstans på heapen (innehåller samma minnesadress)
+        mc2.Name = "Kalle";          // Punkten betyder (ungefär) "accessa propertyn Name i det som mc2 pekar på", det leder då till att mc1.Name nu också är "Kalle"
+
+        Alltså:
+        Värdetyper kopieras värde för värde.
+        Referenstyper kopieras som pekare; flera variabler kan peka på samma objekt.
+
+
+        3. Varför returnerar första metoden 3 och den andra 4?
+        -------------------------------------------------------
+        Svar: 
+
+        Första metoden hanterar värdetyper:
+
+        int x = new int();
+        x = 3;
+
+        int y = new int();
+        y = x;   // y får en kopia av värdet i x
+        y = 4;
+
+        return x;   // x är fortfarande 3
+
+
+        Då int är en värdetyp sker en kopiering av VÄRDET från x till y (inte en kopiering pekarvärden, dvs minnesadresser).
+        När y sedan ändras till 4 påverkar det inte x.
+        Därför returneras 3.
+
+        Andra metoden hanterar referenstyper:
+
+        MyInt x = new MyInt();   // En referensvariabel x av typen MyInt lagras här på stacken (troligtvis, men kan lagras på heapen om den befinner sig i en klassinstans, beror på sammanhang).
+        x.MyValue = 3;
+
+        MyInt y = new MyInt();
+        y = x;                   // Referensvariabeln y får här en kopia av referensen x (dvs minnesadressen), inte av själva objektinstansen, men den pekar nu på samma objekt som x.
+
+        y.MyValue = 4;           // y accessar här propertyn .MyValue i "det den pekar på", dvs samma objektinstans som x pekar på 
+
+        return x.MyValue;        // Genom att gå via x blir värdet detsamma som att gå via y, dvs 4 
+
+
+        Alltså:
+        MyInt är en referenstyp (en klass), dess variabler x och y är referenser
+        När y = x pekar både x och y på samma objekt på heapen.
+        När y.MyValue = 4 ändras det objektet de båda pekar på. Därför returneras 4.
+
+        */
+
+
         static void Main()
         {
 
@@ -608,8 +704,8 @@ namespace SkalProj_Datastrukturer_Minne
             // Exempel: Sekvensen fram till 3e talet är: 0, 1, 1
             // I första iterationen har 3e talet i sekvensen resultatet 0 + 1 = 1, lägg detta i currentFibb
             // Värdena flyttas fram: firstFibb får värdet av secondFibb (=1, dvs hela den föregående sekvensens värde)
-            // och secondFibb får resultatet av currentFibb (=1, dvs 3e talet ) som nytt resultat
-            // Börja om med nästa tal och kör vidare på samma sätt till måltalet (n) är nått. 
+            // och secondFibb får resultatet av currentFibb (3e talet här, dvs 1) som nytt resultat
+            // Börja om med nästa tal i sekvensen och kör vidare på samma sätt till måltalet (n) är nått. 
 
             for (int i = 3; i <= n; i++)
             {
@@ -620,6 +716,17 @@ namespace SkalProj_Datastrukturer_Minne
 
             return currentFibb;
         }
+
+
+        /* Fråga uppgift 6: Vilken funktion är mest minnesvänlig och varför?
+
+           Svar:Jag tror den iterativa funktionen. 
+           Rekursion innebär ju att funktionen anropar sig själv om och om igen, och varje sanrop måste spara undan sin egen information på stacken tills allt är färdigt. 
+           Detta gör att mer och mer information sparas undan, ju fler steg som behövs. Funktionsanropen lagras på stacken ("staplade ovanpå varandra" i ordning). 
+           
+           Den iterativa versionen kör däremot hela beräkningen i en enda loop och behöver bara hålla reda på några få variabler egentligen (också på stacken). 
+           Men skillnaden är att den inte behöver spara undan något från tidigare steg, utan återanvänder samma lilla mängd minne från samma variabler hela tiden.
+         */
     }
 }
 
