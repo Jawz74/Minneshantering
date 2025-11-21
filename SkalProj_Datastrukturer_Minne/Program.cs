@@ -57,7 +57,7 @@ namespace SkalProj_Datastrukturer_Minne
         y = 10;     // tilldelningen av y till något annat påverkar inte x
 
         Reference Types (referenstyper) - Variabel som innehåller en referens till en objektinstans (på heapen). Kopiering kopierar referensen, inte objektet.
-        Exempel på referenstyper är klasser, arrayer, listor, interfaces.
+        Exempel på referenstyper är variabler av (pekare till) typer som klasser, arrayer, listor, interfaces.
 
         MyClass mc1 = new MyClass();
         MyClass mc2 = mc1;           // Både mc1 och mc2 pekar nu på samma objektinstans på heapen (innehåller samma minnesadress)
@@ -84,7 +84,7 @@ namespace SkalProj_Datastrukturer_Minne
         return x;   // x är fortfarande 3
 
 
-        Då int är en värdetyp sker en kopiering av VÄRDET från x till y (inte en kopiering pekarvärden, dvs minnesadresser).
+        Då int är en värdetyp sker en kopiering av VÄRDET från x till y (inte en kopiering av pekarvärden, dvs minnesadresser).
         När y sedan ändras till 4 påverkar det inte x.
         Därför returneras 3.
 
@@ -460,7 +460,8 @@ namespace SkalProj_Datastrukturer_Minne
                     }
 
                     // Allt gick bra, denna inre sekvens av start- och sluttecken är kollad,
-                    // starttecknet har tagits bort från stacken och man är förbi sluttecknet i strängen   
+                    // starttecknet har tagits bort från stacken och man är förbi sluttecknet i strängen.
+                    // Gå vidare med nästa tecken i strängen.   
                     isWellFormed = true;
                 }
             }
@@ -721,7 +722,7 @@ namespace SkalProj_Datastrukturer_Minne
         /* Fråga uppgift 6: Vilken funktion är mest minnesvänlig och varför?
 
            Svar:Jag tror den iterativa funktionen. 
-           Rekursion innebär ju att funktionen anropar sig själv om och om igen, och varje sanrop måste spara undan sin egen information på stacken tills allt är färdigt. 
+           Rekursion innebär ju att funktionen anropar sig själv om och om igen, och varje anrop måste spara undan sin egen information på stacken tills allt är färdigt. 
            Detta gör att mer och mer information sparas undan, ju fler steg som behövs. Funktionsanropen lagras på stacken ("staplade ovanpå varandra" i ordning). 
            
            Den iterativa versionen kör däremot hela beräkningen i en enda loop och behöver bara hålla reda på några få variabler egentligen (också på stacken). 
